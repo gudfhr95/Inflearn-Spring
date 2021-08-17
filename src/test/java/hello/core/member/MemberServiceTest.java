@@ -6,7 +6,7 @@ import hello.core.AppConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MemberServiceTest {
+class MemberServiceTest {
 
   MemberService memberService;
 
