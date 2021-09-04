@@ -12,10 +12,12 @@
       <property name="javax.persistence.jdbc.url"
         value="jdbc:h2:tcp://localhost/~/workspace/Inflearn/Spring/h2/ex1-hello-jpa"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+
       <!-- 옵션 -->
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
       <property name="hibernate.use_sql_comments" value="true"/>
+      <property name="hibernate.jdbc.batch_size" value="10"/>
       <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
     </properties>
   </persistence-unit>
