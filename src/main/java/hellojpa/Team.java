@@ -20,6 +20,11 @@ public class Team {
   @OneToMany(mappedBy = "team")
   private List<Member> members = new ArrayList<>();
 
+  public void addMember(Member member) {
+    member.setTeam(this);
+    members.add(member);
+  }
+
   public Long getId() {
     return id;
   }
@@ -42,5 +47,14 @@ public class Team {
 
   public void setMembers(List<Member> members) {
     this.members = members;
+  }
+
+  @Override
+  public String toString() {
+    return "Team{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", members=" + members +
+        '}';
   }
 }

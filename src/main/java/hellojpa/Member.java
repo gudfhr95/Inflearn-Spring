@@ -43,4 +43,13 @@ public class Member {
   public void setTeam(Team team) {
     this.team = team;
   }
+
+  @Override
+  public String toString() {
+    return "Member{" +
+        "id=" + id +
+        ", username='" + username + '\'' +
+        ", team=" + team +
+        '}';
+  }
 }
