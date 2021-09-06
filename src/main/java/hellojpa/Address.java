@@ -31,15 +31,15 @@ public class Address {
     return zipcode;
   }
 
-  private void setCity(String city) {
+  public void setCity(String city) {
     this.city = city;
   }
 
-  private void setStreet(String street) {
+  public void setStreet(String street) {
     this.street = street;
   }
 
-  private void setZipcode(String zipcode) {
+  public void setZipcode(String zipcode) {
     this.zipcode = zipcode;
   }
 
