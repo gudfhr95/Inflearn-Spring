@@ -1,10 +1,10 @@
 package hellojpa;
 
-import java.time.LocalDateTime;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import org.hibernate.Hibernate;
 
 public class JpaMain {
 
@@ -17,21 +17,30 @@ public class JpaMain {
     tx.begin();
 
     try {
-      Member member = new Member();
-      member.setUsername("user1");
-      member.setCreatedBy("kim");
-      member.setCreatedDate(LocalDateTime.now());
+      Member member1 = new Member();
+      member1.setUsername("member1");
+      em.persist(member1);
 
       em.flush();
       em.clear();
 
+      Member refMember = em.getReference(Member.class, member1.getId());
+      System.out.println("refMember = " + refMember.getClass());  // Proxy
+      Hibernate.initialize(refMember);  // 강제 초기화
+
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
+      e.printStackTrace();
     } finally {
       em.close();
     }
 
     emf.close();
+  }
+
+  private static void logic(Member m1, Member m2) {
+    System.out.println("m1 == m2: = " + (m1 instanceof Member));
+    System.out.println("m1 == m2: = " + (m2 instanceof Member));
   }
 }
