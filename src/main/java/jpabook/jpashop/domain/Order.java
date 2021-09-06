@@ -1,5 +1,8 @@
 package jpabook.jpashop.domain;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +27,15 @@ public class Order extends BaseEntity {
   @Column(name = "ORDER_ID")
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "MEMBER_ID")
   private Member member;
 
-  @OneToOne
+  @OneToOne(fetch = LAZY, cascade = ALL)
   @JoinColumn(name = "DELIVERY_ID")
   private Delivery delivery;
 
-  @OneToMany(mappedBy = "order")
+  @OneToMany(mappedBy = "order", cascade = ALL)
   private List<OrderItem> orderItems = new ArrayList<>();
 
   private LocalDateTime orderDate;  // ORDER_DATE, order_date
