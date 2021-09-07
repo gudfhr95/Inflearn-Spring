@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import jpabook.jpashop.domain.Book;
+import jpabook.jpashop.domain.Item;
 
 public class JpaMain {
 
@@ -22,6 +23,9 @@ public class JpaMain {
       book.setAuthor("김영한");
 
       em.persist(book);
+
+      em.createQuery("select i from Item i where type(i) = Book", Item.class)
+          .getResultList();
 
       tx.commit();
     } catch (Exception e) {
