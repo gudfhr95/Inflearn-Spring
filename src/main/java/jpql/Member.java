@@ -3,6 +3,8 @@ package jpql;
 import static javax.persistence.FetchType.LAZY;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,6 +22,9 @@ public class Member {
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "TEAM_ID")
   private Team team;
+
+  @Enumerated(EnumType.STRING)
+  private MemberType type;
 
   public void changeTeam(Team team) {
     this.team = team;
@@ -56,6 +61,14 @@ public class Member {
 
   public void setTeam(Team team) {
     this.team = team;
+  }
+
+  public MemberType getType() {
+    return type;
+  }
+
+  public void setType(MemberType type) {
+    this.type = type;
   }
 
   @Override
