@@ -8,6 +8,7 @@ import jpabook.jpashop.domain.*;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
 import jpabook.jpashop.repository.order.query.*;
+import jpabook.jpashop.service.query.OrderQueryService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -42,15 +43,11 @@ public class OrderApiController {
     return result;
   }
 
+  private final OrderQueryService orderQueryService;
+
   @GetMapping("/api/v3/orders")
-  public List<OrderDto> ordersV3() {
-    List<Order> orders = orderRepository.findAllWithItem();
-
-    List<OrderDto> result = orders.stream()
-        .map(o -> new OrderDto(o))
-        .collect(toList());
-
-    return result;
+  public List<jpabook.jpashop.service.query.OrderDto> ordersV3() {
+    return orderQueryService.ordersV3();
   }
 
   @GetMapping("/api/v3.1/orders")
