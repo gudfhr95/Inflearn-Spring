@@ -1,6 +1,7 @@
 package study.datajpa.repository;
 
 import java.util.*;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -31,5 +32,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
   Member findMemberByUsername(String username); // 단건
 
-  Optional<Member> findOptionalByUsername(String username); // 단건
+  Optional<Member> findOptionalByUsername(String username); // 단건 Optional
+  
+  Page<Member> findByAge(int age, Pageable pageable);
 }
