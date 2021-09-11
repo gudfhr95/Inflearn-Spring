@@ -6,10 +6,8 @@ import static study.querydsl.entity.QTeam.team;
 
 import com.querydsl.core.*;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.CaseBuilder;
-import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.*;
+import com.querydsl.core.types.dsl.*;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
@@ -586,7 +584,7 @@ public class QuerydslBasicTest {
   @Test
   public void dynamicQuery_BooleanBuilder() {
     String usernameParam = "member1";
-    Integer ageParam = null;
+    Integer ageParam = 10;
 
     List<Member> result = searchMember1(usernameParam, ageParam);
     assertThat(result.size()).isEqualTo(1);
@@ -604,5 +602,35 @@ public class QuerydslBasicTest {
         .selectFrom(member)
         .where(builder)
         .fetch();
+  }
+
+  @Test
+  public void dynamicQuery_WhereParam() {
+    String usernameParam = "member1";
+    Integer ageParam = null;
+
+    List<Member> result = searchMember2(usernameParam, ageParam);
+    assertThat(result.size()).isEqualTo(1);
+  }
+
+  private List<Member> searchMember2(String usernameCond, Integer ageCond) {
+    return queryFactory
+        .selectFrom(member)
+        .where(usernameEq(usernameCond), ageEq(ageCond))
+        .fetch();
+  }
+
+  private BooleanExpression usernameEq(String usernameCond) {
+    return usernameCond != null ? member.username.eq(usernameCond) : null;
+  }
+
+  private BooleanExpression ageEq(Integer ageCond) {
+    return ageCond != null ? member.age.eq(ageCond) : null;
+  }
+
+  // 광고 상태 isValid, 날짜가 IN: isServicable
+
+  private BooleanExpression allEq(String usernameCond, Integer ageCond) {
+    return usernameEq(usernameCond).and(ageEq(ageCond));
   }
 }
