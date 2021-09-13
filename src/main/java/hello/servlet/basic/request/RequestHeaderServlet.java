@@ -1,7 +1,6 @@
-package hello.servlet.request;
+package hello.servlet.basic.request;
 
 import java.io.IOException;
-import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;

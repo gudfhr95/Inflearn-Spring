@@ -1,4 +1,4 @@
-package hello.servlet.request;
+package hello.servlet.basic.request;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.servlet.basic.HelloData;
