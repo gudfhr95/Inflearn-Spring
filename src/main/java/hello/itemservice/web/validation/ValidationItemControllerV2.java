@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -20,6 +22,11 @@ public class ValidationItemControllerV2 {
 
   private final ItemRepository itemRepository;
   private final ItemValidator itemValidator;
+
+  @InitBinder
+  public void init(WebDataBinder dataBinder) {
+    dataBinder.addValidators(itemValidator);
+  }
 
   @GetMapping
   public String items(Model model) {
@@ -201,12 +208,27 @@ public class ValidationItemControllerV2 {
     return "redirect:/validation/v2/items/{itemId}";
   }
 
-  @PostMapping("/add")
+  //  @PostMapping("/add")
   public String addItemV5(@ModelAttribute Item item, BindingResult bindingResult,
       RedirectAttributes redirectAttributes) {
-
     itemValidator.validate(item, bindingResult);
-    
+
+    // 검증에 실패하면 다시 입력 폼으로
+    if (bindingResult.hasErrors()) {
+      log.info("errors={}", bindingResult);
+      return "validation/v2/addForm";
+    }
+
+    // 성공 로직
+    Item savedItem = itemRepository.save(item);
+    redirectAttributes.addAttribute("itemId", savedItem.getId());
+    redirectAttributes.addAttribute("status", true);
+    return "redirect:/validation/v2/items/{itemId}";
+  }
+
+  @PostMapping("/add")
+  public String addItemV6(@Validated @ModelAttribute Item item, BindingResult bindingResult,
+      RedirectAttributes redirectAttributes) {
     // 검증에 실패하면 다시 입력 폼으로
     if (bindingResult.hasErrors()) {
       log.info("errors={}", bindingResult);
