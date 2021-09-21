@@ -7,17 +7,18 @@ import org.hibernate.validator.constraints.Range;
 @Data
 public class Item {
 
+  @NotNull  // 수정 요구사항 추가
   private Long id;
 
-  @NotBlank(message = "공백X")
-  private String itemName;  // A
+  @NotBlank
+  private String itemName;
 
   @NotNull
   @Range(min = 1000, max = 1000000)
-  private Integer price;  // A, typeMismatch
+  private Integer price;
 
   @NotNull
-  @Max(9999)
+//  @Max(9999)  // 수정 요구사항 추가
   private Integer quantity;
 
   public Item() {
