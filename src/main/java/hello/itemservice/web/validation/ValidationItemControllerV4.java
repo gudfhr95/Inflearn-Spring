@@ -95,7 +95,6 @@ public class ValidationItemControllerV4 {
 
     Item itemParam = new Item();
     itemParam.setItemName(form.getItemName());
-    p
     itemParam.setPrice(form.getPrice());
     itemParam.setQuantity(form.getQuantity());
 
