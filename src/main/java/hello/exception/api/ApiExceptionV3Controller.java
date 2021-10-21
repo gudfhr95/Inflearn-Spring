@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-public class ApiExceptionV2Controller {
-  
-  @GetMapping("/api2/members/{id}")
+public class ApiExceptionV3Controller {
+
+  @GetMapping("/api3/members/{id}")
   public ApiExceptionController.MemberDto getMember(@PathVariable("id") String id) {
     if (id.equals("ex")) {
       throw new RuntimeException("잘못된 사용자");
