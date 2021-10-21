@@ -39,6 +39,11 @@ public class ApiExceptionController {
         new IllegalArgumentException());
   }
 
+  @GetMapping("/api/default-handler-ex")
+  public String defaultException(@RequestParam Integer data) {
+    return "ok";
+  }
+
   @Data
   @AllArgsConstructor
   static class MemberDto {
