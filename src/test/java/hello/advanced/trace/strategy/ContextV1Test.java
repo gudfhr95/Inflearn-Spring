@@ -89,9 +89,7 @@ public class ContextV1Test {
     context2.execute();
   }
 
-  ₩
   @Test
-
   void strategyV4() {
     ContextV1 context1 = new ContextV1(() -> log.info("비즈니스 로직1 실행"));
     context1.execute();
