@@ -1,6 +1,6 @@
-package hello.proxy.pureproxy;
+package hello.proxy.pureproxy.proxy;
 
-import hello.proxy.pureproxy.code.*;
+import hello.proxy.pureproxy.proxy.code.*;
 import org.junit.jupiter.api.Test;
 
 public class ProxyPatternTest {
