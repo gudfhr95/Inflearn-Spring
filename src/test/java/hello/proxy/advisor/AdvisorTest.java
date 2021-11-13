@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.aop.*;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 
 @Slf4j
 public class AdvisorTest {
@@ -32,6 +33,21 @@ public class AdvisorTest {
     ServiceInterface target = new ServiceImpl();
     ProxyFactory proxyFactory = new ProxyFactory(target);
     DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(new MyPointcut(), new TimeAdvice());
+    proxyFactory.addAdvisor(advisor);
+    ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
+
+    proxy.save();
+    proxy.find();
+  }
+
+  @Test
+  @DisplayName("스프링이 제공하는 포인트컷")
+  void advisorTest3() {
+    ServiceInterface target = new ServiceImpl();
+    ProxyFactory proxyFactory = new ProxyFactory(target);
+    NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+    pointcut.setMappedNames("save");
+    DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(pointcut, new TimeAdvice());
     proxyFactory.addAdvisor(advisor);
     ServiceInterface proxy = (ServiceInterface) proxyFactory.getProxy();
 
