@@ -1,9 +1,11 @@
 package hello.jdbc.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import hello.jdbc.domain.Member;
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -15,12 +17,22 @@ class MemberRepositoryV0Test {
   @Test
   void crud() throws SQLException {
     // save
-    Member member = new Member("memberV4", 10000);
+    Member member = new Member("memberV100", 10000);
     repository.save(member);
 
     // findById
     Member findMember = repository.findById(member.getMemberId());
     log.info("findMember={}", findMember);
     assertThat(findMember).isEqualTo(member);
+
+    // update: money: 10000 -> 20000
+    repository.update(member.getMemberId(), 20000);
+    Member updatedMember = repository.findById(member.getMemberId());
+    assertThat(updatedMember.getMoney()).isEqualTo(20000);
+
+    // delete
+    repository.delete(member.getMemberId());
+    assertThatThrownBy(() -> repository.findById(member.getMemberId()))
+        .isInstanceOf(NoSuchElementException.class);
   }
 }
