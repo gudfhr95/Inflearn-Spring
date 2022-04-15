@@ -1,9 +1,11 @@
 package hello.jdbc.exception.basic;
 
 import java.sql.SQLException;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+@Slf4j
 public class UncheckedAppTest {
 
   @Test
@@ -11,6 +13,16 @@ public class UncheckedAppTest {
     Controller controller = new Controller();
     Assertions.assertThatThrownBy(() -> controller.request())
               .isInstanceOf(Exception.class);
+  }
+
+  @Test
+  void printEx() {
+    Controller controller = new Controller();
+    try {
+      controller.request();
+    } catch (Exception e) {
+      log.info("ex", e);
+    }
   }
 
   static class Controller {
@@ -46,7 +58,7 @@ public class UncheckedAppTest {
       try {
         runSQL();
       } catch (SQLException e) {
-        throw new RuntimeSQLException(e);
+        throw new RuntimeSQLException();
       }
     }
 
@@ -63,6 +75,9 @@ public class UncheckedAppTest {
   }
 
   static class RuntimeSQLException extends RuntimeException {
+
+    public RuntimeSQLException() {
+    }
 
     public RuntimeSQLException(Throwable cause) {
       super(cause);
