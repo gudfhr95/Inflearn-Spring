@@ -61,4 +61,24 @@ class MemberServiceTest {
     assertTrue(memberRepository.find(username).isPresent());
     assertTrue(logRepository.find(username).isEmpty());
   }
+
+  /**
+   * MemberService    @Transactional:ON
+   * <p>
+   * MemberRepository @Transactional:OFF
+   * <p>
+   * LogRepository    @Transactional:OFF
+   */
+  @Test
+  void singleTx() {
+    // given
+    String username = "singleTx";
+
+    // when
+    memberService.joinV1(username);
+
+    // then: 완전히 롤백되지 않고, member 데이터가 남아서 저장된다.
+    assertTrue(memberRepository.find(username).isPresent());
+    assertTrue(logRepository.find(username).isPresent());
+  }
 }
