@@ -1,11 +1,23 @@
 management:
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
   endpoint:
     shutdown:
       enabled: true
     health:
       show-components: always
-  #      show-details: always
+    #      show-details: always
   endpoints:
     web:
       exposure:
         include: "*"
+
+info:
+  app:
+    name: hello-actuator
+    company: yh
